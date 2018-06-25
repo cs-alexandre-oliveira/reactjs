@@ -17,6 +17,7 @@ class Board extends Component   {
 
 	componentWillMount() {
 		var self = this
+		if(this.props.count) {
 			fetch(`https://baconipsum.com/api/?type=all-meat&sentences=${this.props.count}`)
 				.then(response => response.json())
 				.then(json => json[0]
@@ -35,7 +36,7 @@ class Board extends Component   {
 				}
 			]
 		}))
-  }
+	}
 	nextId()  {
 		this.uniqueId = this.uniqueId || 0
 		return this.uniqueId++
