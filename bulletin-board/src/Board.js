@@ -1,28 +1,33 @@
 import React, { Component } from 'react'
 import Note from './Note'
+import FaPlus from 'react-icons/lib/fa/plus'
 
 class Board extends Component   {
   constructor(props) {
     super(props)
     this.state =  {
-     notes: [
-       {
-         id: 0,
-         note: "Bulbassauro"
-       },
-       {
-         id: 1,
-         note: "Jaiminho o carteiro"
-       },
-       {
-         id: 2,
-         note: "Não era amor! Era ?"
-       }
-     ]
+     notes: []
     }
+    this.add = this.add.bind(this)
     this.eachNote = this.eachNote.bind(this)
     this.update = this.update.bind(this)
     this.remove = this.remove.bind(this)
+    this.nextId = this.nextId.bind(this)
+  }
+  add(text) {
+    this.setState(prevState => ({
+      notes: [
+        ...prevState.notes,
+        {
+          id: this.nextId(),
+          notes: text
+        }
+      ]
+    }))
+  }
+  nextId()  {
+    this.uniqueId = this.uniqueId || 0
+    return this.uniqueId++
   }
   update(newText, i)  {
     console.log("updating item", i,newText)
@@ -53,6 +58,9 @@ class Board extends Component   {
     return  (
       <div className="board">
         {this.state.notes.map(this.eachNote)}
+        <button onClick={this.add.bind(null, "New note")} id="add"> 
+          <FaPlus />
+        </button>
       </div>
     )
   }
